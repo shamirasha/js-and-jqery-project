@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="../css/tool.css" rel="stylesheet" />
+    <script src="../lib/jquery.min.js"></script>
+    <script src="../js/toll.js"></script>
+
+    <script>
+        const mgrObj = new TollManager();
+        function onAddFeature() {
+            const id = Number($("#txtId").val());
+            const vcategory = $("#slCategory").val();
+            const date = new Date($("#txtNewDate").val());
+            let amt = 0;
+            switch (vcategory) {
+                case "Bike": amt = 50; break;
+                case "LMV": amt = 100; break;
+                case "HMV": amt = 150; break;
+                case "Heavy Trucks": amt = 200; break;
+            }
+            const amount = amt;
+            document.getElementById("txtAmount").value = amount;
+            // $("#txtAmount").val()=amount;
+            // const cost=Number($("#txtAmount").val());
+            // const ccategory = $("#costCategory").val();
+            const Tolls = new Toll(id, vcategory, date, amount);
+            console.log(Tolls);
+            mgrObj.addNewExpense(Tolls);
+            alert("Registration successfull");
+        }
+        function amt() {
+            const vcategory = $("#sllCategory").val();
+            var amts = 0;
+            switch (vcategory) {
+                case "Bike": amts = 50; break;
+                case "LMV": amts = 100; break;
+                case "HMV": amts = 150; break;
+                case "Heavy Trucks": amts = 200; break;
+            }
+
+            //document.getElementById("txtAmount").value=amounts;
+            document.getElementById("txtAmt").innerHTML = amts;
+            // const amount=document.getElementById("txtAmt").value;
+
+        }
+        function search() {
+            var product = JSON.parse(localStorage.getItem("product")) || [];
+
+            // Render the vehicle table
+            renderVehicleTable(product);
+
+            $("#categoryFilter, #dateFilter").on("change", function() {
+                filterVehicles();
+            });
+
+            function renderVehicleTable(product) {
+                var vehicleTableBody = $("#vehicleTable tbody");
+                vehicleTableBody.empty();
+
+                vehicles.forEach(function(products) {
+                    vehicleTableBody.append(`<tr><td>${products.vcategory}</td><td>${products.date}</td></tr>`);
+                });
+            }
+
+            function filterVehicles() {
+                var selectedCategory = $("#slllCategory").val();
+                var selectedDate = $("#txtNewDatee").val();
+
+                var filteredVehicles = vehicles.filter(function(products) {
+                    return (selectedCategory === "all" || selectedCategory ===products.vcategory) &&
+                        (selectedDate === "" || selectedDate === products.date);
+                });
+
+                renderVehicleTable(filteredVehicles);
+            }
+
+            filterVehicles(); 
+        }
+        function populate() {
+            const records = mgrObj.getAllExpenses();
+            console.log(records)
+            $("table").find("tr:gt(0)").remove();
+            for (const rec of records) {
+                const tr = `<tr><td>${rec.vcategory}</td><td>${rec.cost}</td></tr>`
+                $("table").append(tr);
+            }
+        }
+        function populate() {
+            const records = mgrObj.getAllExpenses();
+            console.log(records)
+            $("table").find("tr:gt(0)").remove();
+            for (const rec of records) {
+                const tr = `<tr><td>${rec.vcategory}</td><td>${rec.id}</td><td>${rec.date}</td></tr>`
+                $("table").append(tr);
+            }
+        }
+        function populate() {
+            const records = mgrObj.getAllExpenses();
+            console.log(records)
+            $("table").find("tr:gt(0)").remove();
+            for (const rec of records) {
+                const tr = `<tr><td>${rec.vcategory}</td><td>${rec.cost}</td></tr>`
+                $("table").append(tr);
+            }
+        }
+        const eventMapping = () => {
+            $("div").fadeOut(1000)
+            $("li>a:first").click(() => {
+                $("div").fadeOut(1000)
+                $("div:first").fadeIn(1000)
+
+
+            });
+            $("li>a:eq(1)").click(() => {
+                $("div").fadeOut(1000)
+                $("div:eq(1)").fadeIn(1000)
+            });
+            $("li>a:eq(2)").click(() => {
+                $("div").fadeOut(1000);
+                $("div:eq(2)").fadeIn(1000);
+                populate();
+
+            })
+            $("li>a:last").click(() => {
+                $("div").fadeOut(1000)
+                $("div:last").fadeIn(1000);
+                populate();
+
+            });
+            $("button:first").click(onAddFeature);
+            $("button:eq(1)").click(amt);
+
+        }
+        $().ready(() => {
+            eventMapping();
+        })
+    </script>
+</head>
+
+<body>
+    <h1 class="sty">NAVAYUGA INFRASTRURE</h1>
+    <h6 class="st">Toll Company</h6>
+    <nav>
+        <ul>
+            <li><a href="#">Toll Register</a></li>
+            <li><a href="#">Generate Toll Fee</a></li>
+            <li><a href="#">Revenue By Category Of Vehical</a></li>
+            <li><a href="#">Search</a></li>
+        </ul>
+    </nav>
+    <div>
+        <h2>Vehical Toll Details</h2>
+        <hr>
+        <section>
+            <p>
+                Enter the Vehicle No: <input id="txtId" />
+            </p>
+            <p>
+                Select the Category: <select id="slCategory">
+                    <option>Bike</option>
+                    <option>LMV</option>
+                    <option>HMV</option>
+                    <option>Heavy Trucks</option>
+                </select>
+            </p>
+            <p>
+                Enter the Date: <input type="date" id="txtNewDate" />
+            </p>
+            <p>
+                Enter the Amount: <input type="number" id="txtAmount" />
+            </p>
+            <p>
+                <button>SAVE DETAILS</button>
+            </p>
+        </section>
+    </div>
+    <div>
+        <p>
+            Select the Category: <select id="sllCategory">
+                <option>Bike</option>
+                <option>LMV</option>
+                <option>HMV</option>
+                <option>Heavy Trucks</option>
+            </select>
+        </p>
+        <p>
+            <button>Generate</button>
+        </p>
+        <p>AMOUNT TO BE PAID:</p>
+        <p id="txtAmt"></p>
+    </div>
+    <div>
+        <h2>Revenue Details</h2>
+        <table border="1">
+            <tr>
+                <th>Type of vehicles</th>
+                <th>Amount</th>
+
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h1>Filter by Vehical Type</h1>
+        <p>
+            Select the Category: <select id="slllCategory">
+                <option>Bike</option>
+                <option>LMV</option>
+                <option>HMV</option>
+                <option>Heavy Trucks</option>
+            </select>
+        </p>
+        <!-- <p>
+            Enter the Vehicle No: <input  id="txtId" />
+        </p> -->
+        <p>
+            Enter the Date: <input type="date" id="txtNewDatee" />
+        </p>
+        <p>
+            <button id="filterbutton">Filter</button>
+        </p>
+        <p>
+        <ul id="filterResult">
+
+        </ul>
+        </p>
+        <p>
+        <table border="1" id="vehicleTable">
+            <thead>
+            <tr>
+                <th>Type of vehicles</th>
+                <th>Vechcle no</th>
+                <th>Date</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        </p>
+
+    </div>
+
+</body>
+
+</html>

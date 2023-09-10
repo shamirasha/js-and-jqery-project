@@ -1,0 +1,58 @@
+.sty{
+    font-family: Arial, Helvetica, sans-serif;
+    color:midnightblue;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 20px;
+    background-color: antiquewhite;
+    border:2px solid #007bff;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px red;
+}
+ul{
+    display: inline-block;
+    list-style-type: none;
+}
+.st{
+    text-align: center;
+}
+li{
+    display: inline-block;
+
+    
+}
+a{
+    background-color: antiquewhite;
+    color:blue;
+    padding: 10px;
+    margin: 10px;
+    
+}
+nav{
+    text-align: center;
+    
+}
+body{
+    background-image: url('https://media.gettyimages.com/id/182475239/photo/turnpike-toll.jpg?s=612x612&w=gi&k=20&c=aQwMMsh8_0I0C5zkBEFbUuv8Z_p7VU3QQF1lbPaYV1k=');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+.center-table{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 10px;
+    margin:10px;
+
+}
+.center-bill{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 10px;
+    margin:10px;
+
+}
